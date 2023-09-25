@@ -10,15 +10,15 @@ can be tested without the overhead of a PHY layer.
 The LTE mode functional description of this multi-UE proxy is shown in the
 following image:
 
-![LTE Mode Open Source Proxy Functional Diagram](functional_diagram.png)
+![LTE Mode Open Source Proxy Functional Diagram](docs/functional_diagram.png)
 
 The NSA mode functional description of this multi-UE proxy is shown in the following image:
 
-![NSA Mode Open Source Proxy Functional Diagram](functional_diagram_nsa_mode.png)
+![NSA Mode Open Source Proxy Functional Diagram](docs/functional_diagram_nsa_mode.png)
 
 The SA mode functional description of this multi-UE proxy is shown in the following image:
 
-![SA Mode Open Source Proxy Functional Diagram](SA_Mode_Open_Source_Proxy_Functional_Diagram.png)
+![SA Mode Open Source Proxy Functional Diagram](docs/SA_Mode_Open_Source_Proxy_Functional_Diagram.png)
 
 ## Included Features ##
 
@@ -136,7 +136,7 @@ which executables to launch and the necessary flags for each command.  Steps
 cd .../openairinterface5g
 source oaienv
 cd cmake_targets
-sudo -E ./ran_build/build/lte-softmodem -O ../ci-scripts/conf_files/episci/proxy_rcc.band7.tm1.nfapi.conf \
+sudo -E ./ran_build/build/lte-softmodem -O ../ci-scripts/conf_files/untested/episci/proxy_rcc.band7.tm1.nfapi.conf \
 --noS1 --emulate-l1 --nsa --log_config.global_log_options level,nocolor,time,thread_id | tee eNB.log 2>&1
 ```
 
@@ -147,12 +147,12 @@ cd .../openairinterface5g
 source oaienv
 cd cmake_targets
 cd ran_build/build
-../../../targets/bin/conf2uedata -c ../../../ci-scripts/conf_files/episci/episci_ue_test_sfr.conf -o .
-../../../targets/bin/usim -g -c ../../../ci-scripts/conf_files/episci/episci_ue_test_sfr.conf -o .
-../../../targets/bin/nvram -g -c ../../../ci-scripts/conf_files/episci/episci_ue_test_sfr.conf -o .
+../../../targets/bin/conf2uedata -c ../../../ci-scripts/conf_files/untested/episci/episci_ue_test_sfr.conf -o .
+../../../targets/bin/usim -g -c ../../../ci-scripts/conf_files/untested/episci/episci_ue_test_sfr.conf -o .
+../../../targets/bin/nvram -g -c ../../../ci-scripts/conf_files/untested/episci/episci_ue_test_sfr.conf -o .
 cp .u* ../../../cmake_targets
 cd ../..
-sudo -E ./ran_build/build/lte-softmodem -O ../ci-scripts/conf_files/episci/proxy_rcc.band7.tm1.nfapi.conf \
+sudo -E ./ran_build/build/lte-softmodem -O ../ci-scripts/conf_files/untested/episci/proxy_rcc.band7.tm1.nfapi.conf \
 --emulate-l1 --nsa --log_config.global_log_options level,nocolor,time,thread_id | tee eNB.log 2>&1
 ```
 
@@ -164,7 +164,7 @@ sudo -E ./ran_build/build/lte-softmodem -O ../ci-scripts/conf_files/episci/proxy
 cd .../openairinterface5g
 source oaienv
 cd cmake_targets
-sudo -E ./ran_build/build/nr-softmodem -O ../ci-scripts/conf_files/episci/proxy_rcc.band78.tm1.106PRB.nfapi.conf \
+sudo -E ./ran_build/build/nr-softmodem -O ../ci-scripts/conf_files/untested/episci/proxy_rcc.band78.tm1.106PRB.nfapi.conf \
 --nfapi VNF --noS1 --nsa --emulate-l1 --log_config.global_log_options level,nocolor,time,thread_id | tee gNB.log 2>&1
 ```
 
@@ -174,7 +174,7 @@ sudo -E ./ran_build/build/nr-softmodem -O ../ci-scripts/conf_files/episci/proxy_
 cd .../openairinterface5g
 source oaienv
 cd cmake_targets
-sudo -E ./ran_build/build/nr-softmodem -O ../ci-scripts/conf_files/episci/proxy_rcc.band78.tm1.106PRB.nfapi.conf \
+sudo -E ./ran_build/build/nr-softmodem -O ../ci-scripts/conf_files/untested/episci/proxy_rcc.band78.tm1.106PRB.nfapi.conf \
 --nfapi VNF --nsa --emulate-l1 --log_config.global_log_options level,nocolor,time,thread_id | tee gNB.log 2>&1
 ```
 
@@ -207,7 +207,7 @@ cd .../openairinterface5g
 source oaienv
 cd cmake_targets
 node_id=2
-sudo -E ./ran_build/build/nr-uesoftmodem -O ../ci-scripts/conf_files/episci/proxy_nr-ue.nfapi.conf \
+sudo -E ./ran_build/build/nr-uesoftmodem -O ../ci-scripts/conf_files/untested/episci/proxy_nr-ue.nfapi.conf \
 --noS1 --nfapi STANDALONE_PNF --node-number $node_id --emulate-l1 --nsa \
 --log_config.global_log_options level,nocolor,time,thread_id | tee nrue_$node_id.log 2>&1
 ```
@@ -223,7 +223,7 @@ cd .../openairinterface5g
 source oaienv
 cd cmake_targets
 node_id=2
-sudo -E ./ran_build/build/nr-uesoftmodem -O ../ci-scripts/conf_files/episci/proxy_nr-ue.nfapi.conf --nokrnmod 1 \
+sudo -E ./ran_build/build/nr-uesoftmodem -O ../ci-scripts/conf_files/untested/episci/proxy_nr-ue.nfapi.conf --nokrnmod 1 \
 --ue-idx-standalone $node_id --nfapi STANDALONE_PNF --node-number $node_id --emulate-l1 --nsa --uicc0.imsi $imsi \
 --log_config.global_log_options level,nocolor,time,thread_id | tee nrue_$node_id.log 2>&1 
 ```
@@ -239,7 +239,7 @@ cd .../openairinterface5g
 source oaienv
 cd cmake_targets
 node_id=2
-sudo -E ./ran_build/build/lte-uesoftmodem -O ../ci-scripts/conf_files/episci/proxy_ue.nfapi.conf --L2-emul 5 \
+sudo -E ./ran_build/build/lte-uesoftmodem -O ../ci-scripts/conf_files/untested/episci/proxy_ue.nfapi.conf --L2-emul 5 \
 --nokrnmod 1 --noS1 --num-ues 1 --node-number $node_id --nsa \
 --log_config.global_log_options level,nocolor,time,thread_id | tee ue_$node_id.log 2>&1
 ```
@@ -253,7 +253,7 @@ cd .../openairinterface5g
 source oaienv
 cd cmake_targets
 node_id=2
-sudo -E ./ran_build/build/lte-uesoftmodem -O ../ci-scripts/conf_files/episci/proxy_ue.nfapi.conf --L2-emul 5 \
+sudo -E ./ran_build/build/lte-uesoftmodem -O ../ci-scripts/conf_files/untested/episci/proxy_ue.nfapi.conf --L2-emul 5 \
 --nokrnmod 1 --ue-idx-standalone $node_id --num-ues 1 --node-number $node_id --nsa \
 --log_config.global_log_options level,nocolor,time,thread_id | tee ue_$node_id.log 2>&1
 ```
