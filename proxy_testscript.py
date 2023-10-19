@@ -57,7 +57,7 @@ parser.add_argument('--duration', '-d', metavar='SECONDS', type=int, default=30,
 How long to run the test before stopping to examine the logs
 """)
 
-parser.add_argument('--log-dir', '-l', default='.',
+parser.add_argument('--log-dir', '-l', default='./logs',
                     help="""
 Where to store log files
 """)
@@ -431,7 +431,8 @@ class Scenario:
             chown(nfapi_log_file)
             jobs = CompressJobs()
             jobs.compress('{}/nfapi.log'.format(WORKSPACE_DIR),
-                          '{}/nfapi-proxy.log'.format(OPTS.log_dir))
+                          '{}/nfapi-proxy.log'.format(OPTS.log_dir),
+                          remove_original=True)
             jobs.wait()
 
         # Compress eNB.log, UE*.log, gNB.log and NRUE*.log

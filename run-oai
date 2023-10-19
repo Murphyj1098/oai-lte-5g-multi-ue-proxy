@@ -52,18 +52,19 @@ case "$node_type" in
         echo "Node $NODE_NUMBER: gNB"
         sudo ifconfig lo: 127.0.0.2 down >&/dev/null
         sudo ifconfig lo: 127.0.0.2 up || exit
-        if [[ " $* " = *" --sa "* ]]; then
-            conf=proxy_gnb.band78.sa.fr1.106PRB.usrpn310.conf
-        else
-            conf=proxy_rcc.band78.tm1.106PRB.nfapi.conf
-        fi
+        # if [[ " $* " = *" --sa "* ]]; then
+        #     conf=proxy_gnb.band78.sa.fr1.106PRB.usrpn310.conf
+        # else
+        #     conf=proxy_rcc.band78.tm1.106PRB.nfapi.conf
+        # fi
         cmd=(
             # Keep the gNB on processor 1 (the second processor) by default
             taskset --cpu-list 1
             ./ran_build/build/nr-softmodem
-            -O "../ci-scripts/conf_files/untested/$conf"
+            -O /home/jrmurphy/dev/proxy/confs/proxy_gnb.band78.sa.fr1.106PRB.usrpn310.conf
+            # -O "../ci-scripts/conf_files/untested/$conf"
             --nfapi VNF
-            --noS1
+            # --noS1
             --emulate-l1
             --log_config.global_log_options level,nocolor,time,thread_id
         )
@@ -107,10 +108,12 @@ case "$node_type" in
         cmd=(
             taskset --cpu-list "$cpu"
             ./ran_build/build/nr-uesoftmodem
-            -O ../ci-scripts/conf_files/untested/episci/proxy_nr-ue.nfapi.conf
+            -O /home/jrmurphy/dev/proxy/confs/proxy_nr-ue.nfapi.conf
+            # -O ../ci-scripts/conf_files/untested/episci/proxy_nr-ue.nfapi.conf
             --nokrnmod 1
             --nfapi STANDALONE_PNF
             --node-number "$NODE_NUMBER"
+            --ue-idx-standalone "$NODE_NUMBER"
             --emulate-l1
             --log_config.global_log_options level,nocolor,time,thread_id
         )
