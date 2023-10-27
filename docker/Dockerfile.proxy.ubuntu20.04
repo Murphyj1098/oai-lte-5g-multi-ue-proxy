@@ -1,0 +1,50 @@
+#---------------------------------------------------------------------
+# BUILDER IMAGE
+#---------------------------------------------------------------------
+FROM ubuntu:focal as l2_proxy_builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes \
+      build-essentials \
+      libsctp1 \
+      libsctp-dev \
+      libz-dev \
+      psmisc \
+      git && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy the workspace as is
+WORKDIR /proxy
+COPY . .
+RUN make
+
+RUN ldd build/proxy
+
+#---------------------------------------------------------------------
+# TARGET IMAGE
+#---------------------------------------------------------------------
+FROM ubuntu:focal as l2_proxy
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Paris
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes \
+      net-tools \
+      tzdata \
+      psmisc \
+      libasan4 \
+      libsctp1 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /proxy
+COPY --from=l2_proxy_builder /proxy/build/proxy .
+
+RUN ldd proxy
+
+CMD ["sleep", "inifity"]
